@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import userRouter from './routes/userRoute.js';
+import storiesRouter from './routes/storiesRoute.js';
 const app = express();
 dotenv.config();
 
@@ -30,6 +32,9 @@ const dbConnection = async () => {
 };
 
 dbConnection();
+
+app.use('/users', userRouter);
+app.use('/stories', storiesRouter);
 
 app.listen(port, () => {
     console.log(`Server running at port ${port}`);
