@@ -6,6 +6,7 @@ const storySchema = mongoose.Schema({
     },
     title: String,
     details: String,
+    user: String,
 });
 
 const StoryModel = mongoose.model('Story', storySchema);
