@@ -1,19 +1,52 @@
-export const addStory = (req, res) => {
-    console.log('add stories');
-    res.send('post a story');
+import Story from '../models/Story.js';
+
+const addStory = async (req, res) => {
+    const story = req.body;
+    const newStory = new Story(story);
+    try {
+        await newStory.save();
+        res.send(newStory);
+    } catch (error) {
+        res.send(error);
+    }
 };
 
-export const getStories = (req, res) => {
-    res.send('get all');
+const getStories = async (req, res) => {
+    try {
+        const stories = await Story.find({});
+        res.send(stories);
+    } catch (error) {
+        res.send(error);
+    }
 };
 
-export const getSingleStory = (req, res) => {
-    res.send('get single');
+const getSingleStory = async (req, res) => {
+    try {
+        const story = await Story.findOne({ _id: req.params.id });
+        res.send(story);
+    } catch (error) {
+        res.send(error);
+    }
 };
 
-export const updateStory = (req, res) => {
-    res.send('update all');
+const updateStory = async (req, res) => {
+    try {
+        let editedStory = await Story.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+            new: true,
+        });
+        res.send(editedStory);
+    } catch (error) {
+        res.send(error);
+    }
 };
-export const deleteStory = (req, res) => {
-    res.send('delete all');
+const deleteStory = async (req, res) => {
+    const storyToBeDeleted = await Story.findById(req.params.id);
+    try {
+        await Story.deleteOne(storyToBeDeleted);
+        res.send({ id: req.params.id });
+    } catch (error) {
+        res.send(error);
+    }
 };
+
+export { addStory, getStories, getSingleStory, updateStory, deleteStory };
