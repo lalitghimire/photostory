@@ -40,7 +40,11 @@ const getStories = async (req, res) => {
 
 const getSingleStory = async (req, res) => {
     try {
-        const story = await Story.findOne({ _id: req.params.id });
+        console.log('here is single ', req.params.id);
+        const story = await Story.findById({ _id: req.params.id });
+        if (!story) {
+            return res.status(404).json('story not found');
+        }
         res.send(story);
     } catch (error) {
         res.send(error);
@@ -52,6 +56,9 @@ const updateStory = async (req, res) => {
         let editedStory = await Story.findByIdAndUpdate({ _id: req.params.id }, req.body, {
             new: true,
         });
+        if (!editedStory) {
+            return res.status(404).json('story not found');
+        }
         res.send(editedStory);
     } catch (error) {
         res.send(error);
@@ -59,9 +66,12 @@ const updateStory = async (req, res) => {
 };
 const deleteStory = async (req, res) => {
     const storyToBeDeleted = await Story.findById(req.params.id);
+    if (!storyToBeDeleted) {
+        return res.status(404).json('story not found');
+    }
     try {
         await Story.deleteOne(storyToBeDeleted);
-        res.send({ id: req.params.id });
+        res.send({ id: req.params.id, message: 'deleted successfully' });
     } catch (error) {
         res.send(error);
     }
