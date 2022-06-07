@@ -52,6 +52,17 @@ const getSingleStory = async (req, res) => {
 };
 
 const updateStory = async (req, res) => {
+    const token = getToken(req);
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decodedToken.id) {
+        return res.json({ error: 'token missing or invalid' });
+    }
+    const user = await User.findById(decodedToken.id);
+    const storyToBeEdited = await Story.findById(req.params.id);
+    if (storyToBeEdited.user !== user.username) {
+        return res.status(404).json('not authorized to update');
+    }
+
     try {
         let editedStory = await Story.findByIdAndUpdate({ _id: req.params.id }, req.body, {
             new: true,
@@ -65,9 +76,19 @@ const updateStory = async (req, res) => {
     }
 };
 const deleteStory = async (req, res) => {
+    const token = getToken(req);
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decodedToken.id) {
+        return res.json({ error: 'token missing or invalid' });
+    }
+    const user = await User.findById(decodedToken.id);
     const storyToBeDeleted = await Story.findById(req.params.id);
+
     if (!storyToBeDeleted) {
         return res.status(404).json('story not found');
+    }
+    if (storyToBeDeleted.user !== user.username) {
+        return res.status(404).json('not authorized to delete');
     }
     try {
         await Story.deleteOne(storyToBeDeleted);
