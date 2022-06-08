@@ -4,7 +4,7 @@ import storyReducer from './features/storySlice';
 
 export default configureStore({
     reducer: {
-        auth: authReducer,
-        story: storyReducer,
+        authReducer,
+        storyReducer,
     },
 });
