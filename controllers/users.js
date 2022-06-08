@@ -26,10 +26,10 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
-        if (!user) return res.send('User not found');
+        if (!user) return res.status(400).send({ msg: 'User not found' });
 
         const validate = await bcrypt.compare(req.body.password, user.password);
-        if (!validate) return res.send('Password incorrect');
+        if (!validate) return res.status(400).send({ msg: 'Password incorrect' });
 
         const jwttoken = jwt.sign({ email: user.email, id: user._id }, secret, {
             expiresIn: '1h',
