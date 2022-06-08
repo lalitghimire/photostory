@@ -1,5 +1,5 @@
 import { Container, Paper, Typography, Button, TextField } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/features/authSlice';
@@ -8,8 +8,9 @@ const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { email, password } = formData;
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const userData = {
             email,
@@ -17,7 +18,8 @@ const Login = () => {
         };
         console.log('userdata', userData);
         console.log('form', formData);
-        dispatch(login(userData));
+        await dispatch(login(userData));
+        navigate('/');
     };
 
     const handleInputChange = (e) => {
