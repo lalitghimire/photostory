@@ -8,7 +8,15 @@ export const addStory = createAsyncThunk(
     'stories/addStory',
     async (newStory, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${url}/stories`, newStory);
+            const headers = {
+                headers: {
+                    Authorization: `bearer ${JSON.parse(localStorage.getItem('profile')).jwttoken}`,
+                },
+            };
+
+            console.log('headers', headers);
+
+            const response = await axios.post(`${url}/stories`, newStory, headers);
             toast.success('A new story has been added');
             return response.data;
         } catch (error) {
