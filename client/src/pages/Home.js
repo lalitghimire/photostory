@@ -6,6 +6,7 @@ import { getAllStories, removeStory } from '../redux/features/storySlice';
 
 const Home = () => {
     const { stories, isLoading } = useSelector((state) => state.storyReducer);
+    const { user } = useSelector((state) => ({ ...state.authReducer }));
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -16,8 +17,9 @@ const Home = () => {
         return <p> Stories loading......</p>;
     }
 
+    const userName = user ? user.user.name : null;
+
     const handleDelete = (id) => {
-        console.log('id is clicke', id);
         dispatch(removeStory(id));
     };
 
@@ -30,7 +32,9 @@ const Home = () => {
                         <Story title={story.title} user={story.user}>
                             {' '}
                         </Story>{' '}
-                        <Button onClick={() => handleDelete(story._id)}> Delete</Button>
+                        {userName === story.user && (
+                            <Button onClick={() => handleDelete(story._id)}> Delete</Button>
+                        )}
                     </Grid>
                 ))}
         </Grid>
