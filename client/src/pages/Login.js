@@ -1,10 +1,11 @@
 import { Container, Paper, Typography, Button, TextField } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Redirect } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/features/authSlice';
 
 const Login = () => {
+    const { isLoading, user } = useSelector((state) => ({ ...state.authReducer }));
     const [formData, setFormData] = useState({ email: '', password: '' });
     const { email, password } = formData;
     const dispatch = useDispatch();
@@ -19,12 +20,14 @@ const Login = () => {
         console.log('userdata', userData);
         console.log('form', formData);
         await dispatch(login(userData));
-        navigate('/');
+        // navigate('/');
     };
+    if (user) navigate('/');
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
         console.log('eee', name, value);
+
         setFormData({ ...formData, [name]: value });
     };
 
@@ -52,7 +55,7 @@ const Login = () => {
 
                     <div>
                         <Button type='submit' variant='outlined' style={{ margin: 10 }}>
-                            Login
+                            {isLoading ? 'Logging' : 'Login'}
                         </Button>
                     </div>
                     <div>
