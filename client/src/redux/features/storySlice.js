@@ -43,7 +43,12 @@ export const removeStory = createAsyncThunk(
     'stories/removeStory',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`${url}/stories/${id}`);
+            const headers = {
+                headers: {
+                    Authorization: `bearer ${JSON.parse(localStorage.getItem('profile')).jwttoken}`,
+                },
+            };
+            const response = await axios.delete(`${url}/stories/${id}`, headers);
             toast.warn('A story has been deleted');
             return response.data;
         } catch (error) {
@@ -57,9 +62,15 @@ export const updateStory = createAsyncThunk(
     'stories/updateStory',
     async (toBeUpdatedStory, { rejectWithValue }) => {
         try {
+            const headers = {
+                headers: {
+                    Authorization: `bearer ${JSON.parse(localStorage.getItem('profile')).jwttoken}`,
+                },
+            };
             const response = await axios.put(
                 `${url}/stories/${toBeUpdatedStory._id}`,
-                toBeUpdatedStory
+                toBeUpdatedStory,
+                headers
             );
             toast.success(`Story has been updated`);
             return response.data;
