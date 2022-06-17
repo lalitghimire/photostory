@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const storySchema = mongoose.Schema({
-    image: {
+    photo: {
         type: String,
     },
     title: String,
