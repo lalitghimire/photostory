@@ -22,14 +22,14 @@ const Home = () => {
     const handleDelete = (id) => {
         dispatch(removeStory(id));
     };
-
+    console.log('stories', stories);
     return (
         <Grid container margin='0px' padding='25px' alignItems='auto' spacing={3}>
             {stories &&
                 stories.map((story) => (
                     <Grid item xs={12} sm={12} md={6} lg={3} key={story._id}>
                         {' '}
-                        <Story title={story.title} user={story.user}>
+                        <Story title={story.title} user={story.user} photo={story.photo}>
                             {' '}
                         </Story>{' '}
                         {userName === story.user && (
