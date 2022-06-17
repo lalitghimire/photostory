@@ -1,16 +1,15 @@
 import { Card, CardMedia, Typography } from '@mui/material';
 
-const Story = () => {
+const Story = ({ title, user, photo }) => {
     return (
         <Card>
             <CardMedia
                 style={{ height: '300px', paddingTop: '2%' }}
-                image={
-                    'http://www.freeimageslive.com/galleries/workplace/office2/pics/desk_tidy_pencils.jpg'
-                }
+                image={`${photo}`}
                 title='This is image'
             />
-            <Typography> This is title</Typography>
+            <Typography noWrap> Title: {title} </Typography>
+            <Typography>User:{user}</Typography>
         </Card>
     );
 };
