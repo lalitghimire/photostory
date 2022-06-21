@@ -1,35 +1,33 @@
 import { Container, Paper, Typography, Button, TextField } from '@mui/material';
-import { Link, useNavigate, Redirect } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { login } from '../redux/features/authSlice';
+
+const schema = yup.object().shape({
+    email: yup.string().email().required('Email is required'),
+    password: yup.string().required('Password is required'),
+});
 
 const Login = () => {
     const { isLoading, user } = useSelector((state) => ({ ...state.authReducer }));
-    const [formData, setFormData] = useState({ email: '', password: '' });
-    const { email, password } = formData;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const userData = {
-            email,
-            password,
-        };
-        console.log('userdata', userData);
-        console.log('form', formData);
-        await dispatch(login(userData));
-        // navigate('/');
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({ resolver: yupResolver(schema) });
+
+    const handleLogin = async (data) => {
+        await dispatch(login(data));
+        reset();
     };
     if (user) navigate('/');
-
-    const handleInputChange = (e) => {
-        let { name, value } = e.target;
-        console.log('eee', name, value);
-
-        setFormData({ ...formData, [name]: value });
-    };
 
     return (
         <Container component='main' maxWidth='xs'>
@@ -37,25 +35,35 @@ const Login = () => {
                 <Typography component='h1' variant='h5' align='center'>
                     Login{' '}
                 </Typography>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(handleLogin)}>
                     <TextField
                         name='email'
-                        onChange={handleInputChange}
-                        value={email}
-                        label='email'
-                        style={{ width: '90%', margin: '3px' }}
-                    ></TextField>
+                        label='Email'
+                        variant='outlined'
+                        sx={{ m: 1, width: '25ch' }}
+                        required
+                        error={Boolean(errors.email)}
+                        helperText={errors.email?.message}
+                        style={{ width: '95%' }}
+                        InputLabelProps={{ style: { fontSize: 23 } }}
+                        {...register('email')}
+                    />
                     <TextField
                         name='password'
-                        onChange={handleInputChange}
-                        value={password}
-                        label='password'
-                        style={{ width: '90%', margin: '3px' }}
-                    ></TextField>
+                        label='Password'
+                        variant='outlined'
+                        sx={{ m: 1, width: '25ch' }}
+                        required
+                        error={Boolean(errors.password)}
+                        helperText={errors.password?.message}
+                        style={{ width: '95%' }}
+                        InputLabelProps={{ style: { fontSize: 23 } }}
+                        {...register('password')}
+                    />
 
                     <div>
                         <Button type='submit' variant='outlined' style={{ margin: 10 }}>
-                            {isLoading ? 'Logging' : 'Login'}
+                            {isLoading ? 'Logging...' : 'Login'}
                         </Button>
                     </div>
                     <div>
