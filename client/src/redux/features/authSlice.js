@@ -22,6 +22,8 @@ export const login = createAsyncThunk('auth/login', async (loginUser, { rejectWi
         toast.success('Login Success');
         return response.data;
     } catch (error) {
+        toast.error(error.response.data.msg);
+
         return rejectWithValue(error.message);
     }
 });

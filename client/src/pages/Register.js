@@ -1,32 +1,31 @@
 import { Button, Container, Paper, Typography, TextField } from '@mui/material';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../redux/features/authSlice';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { register as registerUser } from '../redux/features/authSlice';
+
+const schema = yup.object().shape({
+    username: yup.string().required('Username is required'),
+    email: yup.string().email().required('Email is required'),
+    password: yup.string().required('Password is required'),
+});
 
 const Register = () => {
-    const [formData, setFormData] = useState({ username: '', email: '', password: '' });
-    const { username, email, password } = formData;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({ resolver: yupResolver(schema) });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const userData = {
-            username,
-            email,
-            password,
-        };
-        console.log('userdata', userData);
-        console.log('form', formData);
-        dispatch(register(userData));
+    const handleRegistration = async (data) => {
+        await dispatch(registerUser(data));
+        reset();
         navigate('/login');
-    };
-
-    const handleInputChange = (e) => {
-        let { name, value } = e.target;
-        console.log('eee', name, value);
-        setFormData({ ...formData, [name]: value });
     };
 
     return (
@@ -35,28 +34,43 @@ const Register = () => {
                 <Typography component='h1' variant='h5' align='center'>
                     Register{' '}
                 </Typography>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(handleRegistration)}>
                     <TextField
                         name='username'
-                        value={username}
-                        onChange={handleInputChange}
                         label='username'
-                        style={{ width: '90%', margin: '3px' }}
-                    ></TextField>
+                        variant='outlined'
+                        sx={{ m: 1, width: '25ch' }}
+                        required
+                        error={Boolean(errors.username)}
+                        helperText={errors.username?.message}
+                        style={{ width: '95%' }}
+                        InputLabelProps={{ style: { fontSize: 23 } }}
+                        {...register('username')}
+                    />
                     <TextField
                         name='email'
-                        value={email}
-                        onChange={handleInputChange}
-                        label='email'
-                        style={{ width: '90%', margin: '3px' }}
-                    ></TextField>
+                        label='Email'
+                        variant='outlined'
+                        sx={{ m: 1, width: '25ch' }}
+                        required
+                        error={Boolean(errors.email)}
+                        helperText={errors.email?.message}
+                        style={{ width: '95%' }}
+                        InputLabelProps={{ style: { fontSize: 23 } }}
+                        {...register('email')}
+                    />
                     <TextField
                         name='password'
-                        value={password}
-                        onChange={handleInputChange}
-                        label='password'
-                        style={{ width: '90%', margin: '3px' }}
-                    ></TextField>
+                        label='Password'
+                        variant='outlined'
+                        sx={{ m: 1, width: '25ch' }}
+                        required
+                        error={Boolean(errors.password)}
+                        helperText={errors.password?.message}
+                        style={{ width: '95%' }}
+                        InputLabelProps={{ style: { fontSize: 23 } }}
+                        {...register('password')}
+                    />
 
                     <div>
                         <Button type='submit' variant='outlined' style={{ margin: 10 }}>
