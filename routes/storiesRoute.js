@@ -1,5 +1,6 @@
 import express from 'express';
 const router = express.Router();
+import authMiddleware from '../middleware/authMiddleware.js';
 import {
     addStory,
     getStories,
@@ -8,10 +9,10 @@ import {
     deleteStory,
 } from '../controllers/stories.js';
 
-router.post('/', addStory);
+router.post('/', authMiddleware, addStory);
 router.get('/', getStories);
 router.get('/:id', getSingleStory);
-router.put('/:id', updateStory);
-router.delete('/:id', deleteStory);
+router.put('/:id', authMiddleware, updateStory);
+router.delete('/:id', authMiddleware, deleteStory);
 
 export default router;
