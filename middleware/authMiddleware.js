@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 const authMiddleware = async (req, res, next) => {
     const auth = req.headers.authorization;
     if (!auth || !auth.toLowerCase().startsWith('bearer ')) {
-        return res.json({ error: 'token missing or invalid' });
+        return res.status(401).json({ error: 'Authentication Token missing or invalid' });
     }
     const token = auth.substring(7);
     try {
@@ -11,7 +11,7 @@ const authMiddleware = async (req, res, next) => {
         req.userId = decodedToken.id;
         next();
     } catch (error) {
-        return res.json({ error: 'Not authorized to delete' });
+        return res.status(401).json({ error: 'Invalid token' });
     }
 };
 
