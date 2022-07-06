@@ -12,7 +12,7 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
-    const { isLoading, user } = useSelector((state) => ({ ...state.authReducer }));
+    const { isLoading, user } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -23,8 +23,8 @@ const Login = () => {
         reset,
     } = useForm({ resolver: yupResolver(schema) });
 
-    const handleLogin = async (data) => {
-        await dispatch(login(data));
+    const handleLogin = (data) => {
+        dispatch(login(data));
         reset();
     };
     if (user) navigate('/');

@@ -40,7 +40,7 @@ const updateStory = async (req, res) => {
     const storyToBeEdited = await Story.findById(req.params.id);
 
     if (storyToBeEdited.user !== user.username) {
-        return res.status(404).json('not authorized to update');
+        return res.status(401).json('not authorized to update');
     }
 
     try {
@@ -63,7 +63,7 @@ const deleteStory = async (req, res) => {
         return res.status(404).json('story not found');
     }
     if (storyToBeDeleted.user !== user.username) {
-        return res.status(404).json('not authorized to delete');
+        return res.status(401).json('not authorized to delete');
     }
     try {
         await Story.deleteOne(storyToBeDeleted);

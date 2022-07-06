@@ -6,6 +6,7 @@ import { Container } from '@mui/material';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AddStory from './pages/AddStory';
+import UpdateStory from './pages/UpdateStory';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/addstory' element={<AddStory />} />
+                <Route path='/updatestory/:id' element={<UpdateStory />} />
             </Routes>
         </Container>
     );
