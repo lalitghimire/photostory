@@ -41,6 +41,8 @@ const Header = () => {
                         color='secondary'
                         variant='contained'
                         style={{ margin: 10 }}
+                        component={Link}
+                        to='/'
                     >
                         Sign Out
                     </Button>
