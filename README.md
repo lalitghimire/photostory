@@ -9,8 +9,6 @@ A fullstack application built with MERN stack (MongoDB, Express, React and NodeJ
     -   [Database](#database)
 -   [Folder Structure](#folder-structure)
 -   [Configuration and Setup](#configuration-and-setup)
--   [Author](#author)
--   [License](#license)
 
 ## Introduction
 
@@ -27,13 +25,14 @@ Some of the technologies and tools used in the project are listed below:
 -   React-router-dom (Used for routing)
 -   Axios (To make http requests to backend )
 -   Material UI (For styling )
+-   React-toastify (For notifications)
 
 ### Server
 
 -   Express (Web framework for Node.js)
 -   Mongoose (To connect express to MongoDB)
 -   JWT(For authentication and authorization)
--   bcrypt (for password encryption)
+-   bcrypt (For password encryption)
 -   CORS (To enable cross origin support)
 
 ### Database
@@ -60,7 +59,7 @@ photostory
 
 ### Install
 
-The project needs nodejs(creates with v14.16) installed in the system to run locally. Clone this repository and install dependencies as follow
+The project needs nodejs(created with v14.16) installed in the system to run locally. Clone this repository and install dependencies as follow
 
 ```
 git clone git@github.com:lalitghimire/photostory.git
