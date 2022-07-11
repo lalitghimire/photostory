@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const url = `http://localhost:5000`;
+const url = `/api`;
 const user = JSON.parse(localStorage.getItem('profile'));
 
 export const register = createAsyncThunk('auth/register', async (newUser, { rejectWithValue }) => {

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const url = `http://localhost:5000`;
+const url = `/api`;
 
 export const addStory = createAsyncThunk(
     'stories/addStory',

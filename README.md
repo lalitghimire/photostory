@@ -1,6 +1,6 @@
 # Photostory
 
-A fullstack application built with MERN stack (MongoDB, Express, React and NodeJS)
+A fullstack application built with MERN stack (MongoDB, Express, React and NodeJS). You can check the app live at https://photstry.herokuapp.com/
 
 -   [Introduction](#introduction)
 -   [Technologies Used](#technologies-used)
@@ -49,7 +49,8 @@ photostory
 │   ├──...
 │   ├──...
 │   └── ...
-├── All other server files
+├── index.js(main server file)
+├── All other server folder/files
 ├── ...
 └── .gitignore
 
@@ -59,7 +60,7 @@ photostory
 
 ### Install
 
-The project needs nodejs(created with v14.16) installed in the system to run locally. Clone this repository and install dependencies as follow
+The project needs nodejs(created with v14.16) and npm installed in the system to run locally. Clone this repository and install dependencies as follow
 
 ```
 git clone git@github.com:lalitghimire/photostory.git
