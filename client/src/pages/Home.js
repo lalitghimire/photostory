@@ -43,6 +43,10 @@ const Home = () => {
                                 Edit
                             </Button>
                         )}
+                        <Button component={Link} to={`/singlestory/${story._id}`}>
+                            {' '}
+                            Read more..
+                        </Button>
                     </Grid>
                 ))}
         </Grid>

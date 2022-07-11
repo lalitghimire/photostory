@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AddStory from './pages/AddStory';
 import UpdateStory from './pages/UpdateStory';
+import SingleStory from './pages/SingleStory';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,6 +21,8 @@ const App = () => {
                 <Route exact path='/' element={<Home />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='/singlestory/:id' element={<SingleStory />} />
+
                 <Route
                     path='/addstory'
                     element={
