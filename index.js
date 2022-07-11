@@ -13,10 +13,6 @@ app.use(express.json({ limit: '30mb', extended: true }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(express.static('client/build'));
 
-app.get('/', (req, res) => {
-    res.send('Hello storybook');
-});
-
 const mongo_uri = process.env.MONGO_URI;
 
 //connection to mongodb local
