@@ -30,8 +30,8 @@ const dbConnection = async () => {
 
 dbConnection();
 
-app.use('api/users', userRouter);
-app.use('api/stories', storiesRouter);
+app.use('/api/users', userRouter);
+app.use('/api/stories', storiesRouter);
 
 app.listen(port, () => {
     console.log(`Server running at port ${port}`);
