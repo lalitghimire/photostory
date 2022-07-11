@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { login } from '../redux/features/authSlice';
+import { useEffect } from 'react';
 
 const schema = yup.object().shape({
     email: yup.string().email().required('Email is required'),
@@ -15,6 +16,10 @@ const Login = () => {
     const { isLoading, user } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) navigate('/');
+    }, [user, navigate]);
 
     const {
         register,
@@ -27,7 +32,7 @@ const Login = () => {
         dispatch(login(data));
         reset();
     };
-    if (user) navigate('/');
+    //if (user) navigate('/');
 
     return (
         <Container component='main' maxWidth='xs'>
