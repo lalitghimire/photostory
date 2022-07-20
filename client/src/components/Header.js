@@ -10,7 +10,7 @@ const Header = () => {
     console.log('user', user);
     return (
         <AppBar
-            position='static'
+            position='sticky'
             style={{ align: 'center', background: '#7db1e8', borderRadius: '20px' }}
         >
             {' '}
@@ -58,6 +58,14 @@ const Header = () => {
                     </Button>
                 )}
             </Toolbar>
+            <Typography align='center' variant='h4'>
+                {' '}
+                Read the story behind each photo
+            </Typography>
+            <Typography align='center' variant='h4'>
+                {' '}
+                or tell your story with a photo
+            </Typography>
         </AppBar>
     );
 };
